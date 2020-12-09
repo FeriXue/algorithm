@@ -14,6 +14,7 @@ void insert_tire(string s)
         int u = s[i] - 'a';
         if (!son[father][u]) {
             son[father][u] = ++ now_in; // 此处的++now_in代表的是一个字符串中的第几个字母，真正的字符串中的字母是由下标存储的
+            // 此处son[father][u]中存储的值的含义是这是第几层;
         }
         father = son[father][u];
     }
