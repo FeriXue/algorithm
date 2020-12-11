@@ -10,7 +10,7 @@ int value[N], next_[N], head, temp, now_in;
 void init()
 {
     head = -1;
-    temp = head;
+    //temp = head;
     now_in = 0;
 }
 
