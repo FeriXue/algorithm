@@ -8,6 +8,7 @@ int lowbit(int x)
 {
     return x & -x;
 }
+
 int main()
 {
     cin >> n;
@@ -20,8 +21,7 @@ int main()
         }
         cout << number << " ";
     }
-    cout << endl;
-
+    cout << lowbit(10) << endl;
     return 0;
 }
 
