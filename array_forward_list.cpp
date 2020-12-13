@@ -5,7 +5,8 @@ using namespace std;
 
 const int N = 1e5 + 10;
 
-int value[N], next_[N], head, temp, now_in;
+int value[N], next_[N], head, now_in;
+int temp;
 
 void init()
 {
