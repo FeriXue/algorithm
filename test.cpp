@@ -5,7 +5,8 @@ using namespace std;
 
 int main()
 {
-    vector<int> a{1, 2, 3, 4};
+    string a{"asda"};
+    printf("%d\n", a[0]);
     return 0;
 }
 
