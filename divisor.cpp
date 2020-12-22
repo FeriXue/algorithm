@@ -21,6 +21,7 @@ vector<int> get_divisor(int n)
     return res;
 }
 
+
 int main()
 {
     int n = 0;

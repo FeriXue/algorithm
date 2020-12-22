@@ -7,7 +7,7 @@ bool prime_num(int n)
     if (n < 2) {
         return 0;
     }
-    for (int i = 2; i <= n / i; ++ i) {
+    for (int i = 2; i <= n / i; ++ i) { //i * i <= n;
         if (n % i == 0) {
             return 0;
         }
