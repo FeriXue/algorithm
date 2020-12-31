@@ -1,12 +1,10 @@
 #include <iostream>
-#include <cstring>
-#include <vector>
 #include <queue>
+#include <cstring>
 
 using namespace std;
-using PII = pair<int, int>;
 
-const int N = 1.5e5 + 10;
+const int N = 1e5 + 10;
 
 int h[N], value[N], ne[N], w[N], now_in;
 int dist[N];
@@ -22,29 +20,28 @@ void add(int a, int b, int c)
     h[a] = now_in ++;
 }
 
-int dijkstra()
+int spfa()
 {
     memset(dist, 0x3f, sizeof(dist));
     dist[1] = 0;
 
-    priority_queue<PII, vector<PII>, greater<PII> > heap;
-    heap.push({0, 1});
+    queue<int> q;
+    q.push(1);
+    st[1] = 1;
 
-    while (heap.size()) {
-        auto t = heap.top();
-        heap.pop();
-
-        int ver = t.second, distant = t.first;
-
-        if (st[ver]) {
-            continue;
-        }
-        st[ver] = 1;
-        for (int i = h[ver]; i != -1; i = ne[i]) {
+    while (q.size()) {
+        int t = q.front();
+        q.pop();
+        st[t] = 0;
+        
+        for (int i = h[t]; i != -1; i = ne[i]) {
             int next_point = value[i];
-            if (dist[next_point] > distant + w[i]) {
-                dist[next_point] = distant + w[i];
-                heap.push({dist[next_point], next_point});
+            if (dist[next_point] > dist[t] + w[i]) {
+                dist[next_point] = dist[t] + w[i];
+                if (!st[next_point]) {
+                    q.push(next_point);
+                    st[next_point] = 1;
+                }
             }
         }
     }
@@ -58,7 +55,6 @@ int dijkstra()
 int main()
 {
     memset(h, 0xff, sizeof(h));
-
     cin >> n >> m;
     int a = 0, b = 0, c = 0;
     for (int i = 0; i < m; ++ i) {
@@ -66,7 +62,13 @@ int main()
         add(a, b, c);
     }
 
-    cout << dijkstra() << endl;
+    int t = spfa();
+    if (t == -1) {
+        cout << "impossible" << endl;
+    } else {
+        cout << t << endl;
+    }
 
     return 0;
 }
+

@@ -3,12 +3,10 @@
 
 using namespace std;
 
-const int N = 510, M = 1e4 + 10;
+const int N = 510, M = 1e4 +10;
 
 struct {
-    int a = 0;
-    int b = 0;
-    int w = 0;
+    int a = 0, b = 0, c = 0;
 } edge[M];
 
 int dist[N], backup[N];
@@ -21,11 +19,12 @@ int bellman_ford()
 
     for (int i = 0; i < k; ++ i) {
         memcpy(backup, dist, sizeof(dist));
-        for (int j = 1; j <= m; ++ j) {
-            int a = edge[j].a, b = edge[j].b, w = edge[j].w;
-            dist[b] = min(dist[b], backup[a] + w);
+        for (int j = 0; j < m; ++ j) {
+            int a = edge[j].a, b = edge[j].b, c = edge[j].c;
+            dist[b] = min(dist[b], backup[a] + c);
         }
     }
+    
     if (dist[n] > 0x3f3f3f3f >> 1) {
         return -1;
     }
@@ -35,8 +34,8 @@ int bellman_ford()
 int main()
 {
     cin >> n >> m >> k;
-    for (int i = 1; i <= m; ++ i) {
-        cin >> edge[i].a >> edge[i].b >> edge[i].w;
+    for (int i = 0; i < m; ++ i) {
+        cin >> edge[i].a >> edge[i].b >> edge[i].c;
     }
 
     int t = bellman_ford();
@@ -47,4 +46,3 @@ int main()
     }
     return 0;
 }
-
