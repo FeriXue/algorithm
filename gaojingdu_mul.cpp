@@ -16,7 +16,7 @@ vector<int> mul(vector<int> A, int b)
         t = t / 10;
     }
 
-    while (C.size() > 1 && C.back() == 0) {
+    while (C.size() > 1 && C.back() == 0) { // 避免诸如12345 * 0 = 00000 的情况， 只保存一个0即可；
         C.pop_back();
     }
 
