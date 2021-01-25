@@ -9,7 +9,7 @@ vector<int> cut(vector<int> &A, vector<int> &B)
     int t = 0;
 
     for (decltype(A.size()) i = 0; i < A.size(); ++i) {
-        t = A[i] - t;
+        t = A[i] - t; // 因为减法有借位
         if (i < B.size()) {
             t -= B[i];
         }
