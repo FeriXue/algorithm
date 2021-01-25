@@ -60,7 +60,7 @@ int main()
 
     cout << C.back(); // 第一个数不需要最高位补0
     for (int i = C.size() - 2; i >= 0; --i) {
-        printf("%09d", C[i]); // 剩余数据需要最高位补0；
+        printf("%09d", C[i]); // 不足9位的需要在最高位补0
     }
     printf("\n");
 
