@@ -6,7 +6,6 @@ using namespace std;
 
 class MinStack {
 public:
-    /** initialize your data structure here. */
 
     MinStack() {
         mi.push(INT_MAX);
