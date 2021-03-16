@@ -58,3 +58,30 @@ public:
         return ans;
     }
 };
+
+class Solutio3 {
+public:
+    vector<int> dailyTemperatures(vector<int>& s) {
+        int n = s.size();
+        vector<int> ans(n, 0);
+        stack<int> stk;
+        for (int i = 0; i < n; ++ i) {
+            while (!stk.empty() && s[stk.top()] < s[i]) {
+                int t = stk.top();
+                stk.pop();
+                ans[t] = i - t;
+            }
+            if (stk.empty() || s[stk.top()] >= s[i]) {
+                stk.push(i);
+            }
+        }
+
+        while (!stk.empty()) {
+            int t = stk.top();
+            stk.pop();
+            ans[t] = 0;
+        }
+
+        return ans;
+    }
+};
