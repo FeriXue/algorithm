@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <stack>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -53,6 +55,61 @@ public:
             stk.pop();
         }
         ans = reverse(ans);
+
+        return ans;
+    }
+};
+
+class Solutio {
+public:
+
+    string decodeString(string s) {
+        string ans = "";
+        vector<string> stk;
+
+        for (auto &x : s) {
+            if (isalnum(x) || x == '[') { // 入栈
+                string t = "";
+                t.push_back(x);
+                stk.push_back(t);
+            } else if (x == ']') {
+                string temp = "";
+                while (stk.back() != "[") {
+                    temp += stk.back();
+                    stk.pop_back();
+                }
+                stk.pop_back();
+                int times = 0;
+                int bit = 1;
+                string tm = stk.back();
+                while (isdigit(tm[0])) {
+                    times += stoi(tm) * bit;
+                    bit *= 10;
+                    stk.pop_back();
+                    tm = stk.back();
+                    //cout << stk.back() << "@@@@@@@" << endl;
+                 }
+                --times;
+                stk.pop_back();
+                reverse(temp.begin(), temp.end());
+                string cp = temp;
+                while (times--) {
+                    temp += cp;
+                }
+                cout << temp << endl;
+                /*for (auto &c : temp){
+                    string er(1, c);
+                    //stk.push_back(er);
+                }*/
+            }
+        }
+
+        if (stk.empty()) {
+            cout << 1 << endl;
+        } else {
+            cout << "mother fc" << endl;
+            cout << stk.back() << endl;
+        }
 
         return ans;
     }
