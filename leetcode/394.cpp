@@ -8,107 +8,60 @@ using namespace std;
 
 class Solution {
 public:
-    string reverse(string s) {
-        string ans;
-        for (int i = s.size() - 1; i != -1; -- i) {
-            ans += s[i];
+
+    void push_in(vector<string> &stk, char c)
+    {
+        string t(1, c);
+        stk.push_back(t);
+    }
+
+    string pop_in(vector<string> &stk)
+    {
+        string res = "";
+        while(stk.back() != "[") {
+            res += stk.back();
+            stk.pop_back();
+        }
+        stk.pop_back(); // 将'['出栈；
+        return res;
+    }
+
+    int get_times(vector<string> &stk)
+    {
+        int ans = 0, fund = 1;
+        string t = stk.back();
+        while (isdigit(t[0])) {
+            ans += stoi(t) * fund;
+            fund *= 10;
+            stk.pop_back();
+            t = stk.back();
         }
         return ans;
     }
-
-    string stk_pop(stack<char> &stk) {
-        string ans;
-        while (stk.top() != '[') {
-            ans += stk.top();
-            stk.pop();
-        }
-        stk.pop();
-        return ans;
-    }
-
-    void push_stack(stack<char> &stk, string t) {
-        for (auto &c : t) {
-            stk.push(c);
-        }
-    }
-
-    string decodeString(string s) {
-        string ans;
-        stack<char> stk;
-        for (auto &c : s) {
-            if (c != ']') {
-                stk.push(c);
-            } else {
-                string t = stk_pop(stk);
-                t = reverse(t);
-                int time = stk.top();
-                stk.pop();
-                while (time --) {
-                    t += t;
-                }
-                push_stack(stk, t);
-            }
-        }
-        
-        while (!stk.empty()) {
-            ans += stk.top();
-            stk.pop();
-        }
-        ans = reverse(ans);
-
-        return ans;
-    }
-};
-
-class Solutio {
-public:
 
     string decodeString(string s) {
         string ans = "";
         vector<string> stk;
-
         for (auto &x : s) {
-            if (isalnum(x) || x == '[') { // 入栈
-                string t = "";
-                t.push_back(x);
-                stk.push_back(t);
-            } else if (x == ']') {
-                string temp = "";
-                while (stk.back() != "[") {
-                    temp += stk.back();
-                    stk.pop_back();
+            if (isalnum(x) || x == '[') {
+                // 执行入栈操作；
+                push_in(stk, x);
+            } else {
+                string res = pop_in(stk);// 执行出栈操作；
+                reverse(res.begin(), res.end());// 翻转
+                int times = get_times(stk);// 获得重复次数times
+                string mod = res;
+                while (--times) { // 重复
+                    res += mod;
                 }
-                stk.pop_back();
-                int times = 0;
-                int bit = 1;
-                string tm = stk.back();
-                while (isdigit(tm[0])) {
-                    times += stoi(tm) * bit;
-                    bit *= 10;
-                    stk.pop_back();
-                    tm = stk.back();
-                    //cout << stk.back() << "@@@@@@@" << endl;
-                 }
-                --times;
-                stk.pop_back();
-                reverse(temp.begin(), temp.end());
-                string cp = temp;
-                while (times--) {
-                    temp += cp;
+                for (auto &c : res) { // 重新入栈
+                    push_in(stk, c);
                 }
-                cout << temp << endl;
-                /*for (auto &c : temp){
-                    string er(1, c);
-                    //stk.push_back(er);
-                }*/
             }
         }
 
-        if (stk.empty()) {
-            cout << 1 << endl;
-        } else {
-            cout << "mother fc" << endl;
-            cout << stk.back() << endl;
+        for (auto &x : stk) {// 最终栈中就是解码后的字符串
+            ans += x;
         }
 
         return ans;
