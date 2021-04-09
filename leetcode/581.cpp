@@ -1,7 +1,6 @@
 #include <vector>
 
 using namespace std;
-
 class Solution {
 public:
     int findUnsortedSubarray(vector<int>& nums) {
@@ -26,6 +25,18 @@ public:
             }
             
         }
+
+        int mi = *st2, ma = *st2;
+        auto iter = st2;
+        auto ll = st2, rr = ed2;
+        while (iter <= ed2) {
+            if (*iter < mi) {
+                mi = *iter;
+            } else if (*iter > ma) {
+                ma = *iter;
+            }
+            ++iter;
+        }
         int sum = 0;
         if (st1 != nums.end()) {
             sum = 1;
@@ -34,6 +45,21 @@ public:
                 ++ sum;
             }
         }
+
+        if (ll != nums.begin() && rr != nums.end() - 1 && st1 != nums.end()) {
+            
+            auto left = ll - 1, right = rr + 1;
+            while (left >= nums.begin() && mi < *left) {
+                --left;
+                ++sum;
+            }
+            while (right != nums.end() && ma > *right) {
+                ++right;
+                ++sum;
+            }
+        }
+
+
         return sum;
     }
 };
